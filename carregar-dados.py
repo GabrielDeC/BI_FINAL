@@ -10,10 +10,10 @@ folder_path = 'Dados_Tratados/'  # Altere para o caminho desejado
 
 # Configuração da conexão com o MySQL
 conn = mysql.connector.connect(
-    host='127.0.0.1',       # ou o host apropriado
-    user='root',     # substitua pelo seu usuário MySQL
-    password='Str0ngP@ssw0rd!',   # substitua pela sua senha MySQL
-    database='dw_covid'    # substitua pelo nome do seu banco de dados
+    host='',       # ou o host apropriado
+    user='',     # substitua pelo seu usuário MySQL
+    password='',   # substitua pela sua senha MySQL
+    database=''    # substitua pelo nome do seu banco de dados
 )
 
 cursor = conn.cursor()
