@@ -1,0 +1,89 @@
+CREATE DATABASE dw_covid_;
+
+USE dw_covid_;
+
+CREATE TABLE `dim_localidade` (
+  `id_localidade` int,
+  `estado` text,
+  `estadoIBGE` text,
+  `municipio` text,
+  `municipioIBGE` int,
+  `estadoNotificacao` text,
+  `municipioNotificacao` text,
+  `municipioNotificacaoIBGE` int
+);
+
+CREATE TABLE `dim_paciente` (
+  `id_paciente` int,
+  `profissionalSaude` text,
+  `profissionalSeguranca` text,
+  `sexo` text,
+  `racaCor` text,
+  `idade` tinyint
+);
+
+CREATE TABLE `dim_sintomas` (
+  `id_sintoma` int,
+  `sintomas` text,
+  `outrosSintomas` text
+);
+
+CREATE TABLE `dim_teste` (
+  `id_teste` int,
+  `codigoEstadoTeste1` int,
+  `codigoTipoTeste1` int,
+  `codigoFabricanteTeste1` int,
+  `codigoResultadoTeste1` int,
+  `codigoEstadoTeste2` int,
+  `codigoTipoTeste2` int,
+  `codigoFabricanteTeste2` int,
+  `codigoResultadoTeste2` int,
+  `codigoEstadoTeste3` int,
+  `codigoTipoTeste3` int,
+  `codigoFabricanteTeste3` int,
+  `codigoResultadoTeste3` int,
+  `codigoEstadoTeste4` int,
+  `codigoTipoTeste4` int,
+  `codigoFabricanteTeste4` int,
+  `codigoResultadoTeste4` int,
+  `dataColetaTeste1` datetime,
+  `dataColetaTeste2` datetime,
+  `dataColetaTeste3` datetime,
+  `dataColetaTeste4` datetime
+);
+
+CREATE TABLE `dim_vacinacao` (
+  `id_vacinacao` int,
+  `codigoRecebeuVacina` int,
+  `codigoLaboratorioPrimeiraDose` text,
+  `codigoLaboratorioSegundaDose` text,
+  `lotePrimeiraDose` text,
+  `loteSegundaDose` text,
+  `dataPrimeiraDose` datetime,
+  `dataSegundaDose` datetime
+);
+
+CREATE TABLE `FatoCasos` (
+  `id_caso` int,
+  `id_paciente` int,
+  `id_localidade` int,
+  `id_vacinacao` int,
+  `sintomas` text,
+  `outrosSintomas` text,
+  `outrasCondicoes` text,
+  `condicoes` text,
+  `evolucaoCaso` text,
+  `classificacaoFinal` text,
+  `totalTestesRealizados` int,
+  `dataNotificacao` datetime,
+  `dataInicioSintomas` datetime,
+  `dataEncerramento` datetime,
+  `excluido` tinyint(1),
+  `validado` tinyint(1)
+);
+
+CREATE TABLE `FatoTestes` (
+  `id_fatoTeste` int,
+  `id_caso` int,
+  `id_teste` int
+);
