@@ -4,8 +4,6 @@ pd.set_option('display.max_columns', None)
 
 df_dados = pd.read_csv('sindromegripais_sus.csv',encoding='UTF-8', delimiter=';', on_bad_lines='skip', low_memory=False)
 
-# Tratamento das colunas de Data e definição de datas não informadas como 2000-01-01.
-
 df_dados[['dataNotificacao', 'dataInicioSintomas', 'dataEncerramento',
           'dataPrimeiraDose', 'dataSegundaDose', 'dataColetaTeste1',
           'dataColetaTeste2', 'dataColetaTeste3', 'dataColetaTeste4']] = \
@@ -15,8 +13,6 @@ df_dados[['dataNotificacao', 'dataInicioSintomas', 'dataEncerramento',
 .apply(lambda col: pd.to_datetime(col, format='%Y-%m-%d', errors='coerce')
        .fillna(pd.Timestamp('2000-01-01'))
        .astype('datetime64[ns]'))
-
-# Tratamento das colunas de Inteiros e definição de dados não informadas como '0'.
 
 df_dados[['idade', 'municipioIBGE', 'municipioNotificacaoIBGE', 'codigoEstrategiaCovid',	'codigoBuscaAtivaAssintomatico',	'outroBuscaAtivaAssintomatico',
          'codigoTriagemPopulacaoEspecifica',	'outroTriagemPopulacaoEspecifica',	'codigoLocalRealizacaoTestagem',
@@ -38,8 +34,6 @@ df_dados[['idade', 'municipioIBGE', 'municipioNotificacaoIBGE', 'codigoEstrategi
          'codigoFabricanteTeste4',	'codigoResultadoTeste4']]\
          .apply(pd.to_numeric, errors='coerce').fillna(0).astype(int)
 
-# Tratamento das colunas de String e definição de dados não informados com 'não informado'
-
 df_dados[['sintomas', 'profissionalSaude', 'racaCor',
           'outrosSintomas', 'outrasCondicoes', 'profissionalSeguranca',
           'cbo', 'condicoes', 'sexo', 'estado', 'estadoIBGE',
@@ -56,16 +50,10 @@ df_dados[['sintomas', 'profissionalSaude', 'racaCor',
           'source_id', 'codigoDosesVacina', 'estadoNotificacaoIBGE']]\
         .fillna('não informado').astype(str)
 
-# Criação das tabelas de Dimensão
-
 caminho_dados_saida = "opendatasus_tratado.csv"
 df_dados.to_csv(caminho_dados_saida, index=True, index_label='id')
 
-# Definindo df_dados para a nova tabela já tratada
-
 df_dados_tratados = pd.read_csv('opendatasus_tratado.csv',encoding='UTF-8', delimiter=',', on_bad_lines='skip')
-
-# Criando tabelas Dimensão e Fato
 
 caminho_dados_saida = "Dados_Tratados/dim_localidade.csv"
 df_dim_localidade = ['estado', 'estadoIBGE', 'municipio', 'municipioIBGE', 'estadoNotificacao', 'municipioNotificacao', 'municipioNotificacaoIBGE']
@@ -105,8 +93,6 @@ df_paciente = pd.read_csv('Dados_Tratados/dim_paciente.csv',encoding='UTF-8', de
 df_sintomas = pd.read_csv('Dados_Tratados/dim_sintomas.csv',encoding='UTF-8', delimiter=',')
 df_teste = pd.read_csv('Dados_Tratados/dim_teste.csv',encoding='UTF-8', delimiter=',')
 df_vacinacao = pd.read_csv('Dados_Tratados/dim_vacinacao.csv',encoding='UTF-8', delimiter=',')
-
-# Tabela Fato
 
 caminho_dados_saida = "Dados_Tratados/FatoCasos.csv"
 df_fato_casos = ['sintomas', 'outrosSintomas', 'outrasCondicoes',
