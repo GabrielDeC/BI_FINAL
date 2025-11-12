@@ -17,7 +17,6 @@ cursor = conn.cursor()
 csv_files = glob.glob(os.path.join(folder_path, '*.csv'))
 
 def sanitize_column_name(col):
-    """Remove caracteres inválidos e substitui espaços por underline nos nomes das colunas."""
     return col.strip().replace(" ", "_").replace(":", "")
 
 for csv_file in csv_files:    
